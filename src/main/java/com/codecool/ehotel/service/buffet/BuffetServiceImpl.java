@@ -54,13 +54,16 @@ public class BuffetServiceImpl implements BuffetService{
 
     @Override
     public int collectWaste(MealDurability mealDurability, LocalDateTime time) {
+
         int cost = 0;
+
         for (Meal meal : buffet.meals()){
             if(meal.timeStamp().isBefore(time) && meal.mealType().getDurability() == mealDurability ) {
                 buffet.meals().remove(meal);
                 cost += meal.mealType().getCost();
             }
         }
+
         return cost;
     }
 }

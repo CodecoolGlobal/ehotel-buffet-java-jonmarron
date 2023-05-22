@@ -2,6 +2,7 @@ package com.codecool.ehotel.service.buffet;
 
 import com.codecool.ehotel.model.Buffet;
 import com.codecool.ehotel.model.Meal;
+import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDateTime;
@@ -44,9 +45,22 @@ public class BuffetServiceImpl implements BuffetService{
         }
 
         if(freshestMeal != null){
+            buffet.meals().remove(freshestMeal);
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public int collectWaste(MealDurability mealDurability, LocalDateTime time) {
+        int cost = 0;
+        for (Meal meal : buffet.meals()){
+            if(meal.timeStamp().isBefore(time) && meal.mealType().getDurability() == mealDurability ) {
+                buffet.meals().remove(meal);
+                cost += meal.mealType().getCost();
+            }
+        }
+        return cost;
     }
 }

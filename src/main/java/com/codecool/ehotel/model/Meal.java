@@ -1,6 +1,6 @@
     package com.codecool.ehotel.model;
 
-    import java.time.LocalDateTime;
+    import java.time.LocalTime;
 
-    public record Meal(MealType mealType, LocalDateTime timeStamp) {
+    public record Meal(MealType mealType, LocalTime timeStamp) {
     }

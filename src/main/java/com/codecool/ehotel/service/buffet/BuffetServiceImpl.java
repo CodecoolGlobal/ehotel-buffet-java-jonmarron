@@ -6,6 +6,7 @@ import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map;
 
 public class BuffetServiceImpl implements BuffetService{
@@ -24,7 +25,7 @@ public class BuffetServiceImpl implements BuffetService{
             Integer amount = meal.getValue();
 
             for(int i = 0; i < amount; i++){
-                buffet.meals().add(new Meal(mealType, LocalDateTime.now()));
+                buffet.meals().add(new Meal(mealType, LocalTime.now()));
             }
         }
     }
@@ -33,7 +34,7 @@ public class BuffetServiceImpl implements BuffetService{
     public boolean consumeFreshest(MealType mealType) {
 
         Meal freshestMeal = null;
-        LocalDateTime freshestTimeStamp = null;
+        LocalTime freshestTimeStamp = null;
 
         for(Meal meal : buffet.meals()){
             if (meal.mealType() == mealType){
@@ -53,7 +54,7 @@ public class BuffetServiceImpl implements BuffetService{
     }
 
     @Override
-    public int collectWaste(MealDurability mealDurability, LocalDateTime time) {
+    public int collectWaste(MealDurability mealDurability, LocalTime time) {
 
         int cost = 0;
 

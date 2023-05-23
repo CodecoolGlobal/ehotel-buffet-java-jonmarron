@@ -2,6 +2,7 @@ package com.codecool.ehotel.service.breakfast;
 
 import com.codecool.ehotel.model.*;
 import com.codecool.ehotel.service.buffet.BuffetService;
+import com.codecool.ehotel.service.ui.DisplayMetrics;
 
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class BreakfastManager {
     }
 
     public void serve(List<Guest> guests){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         LocalTime cycleStart = LocalTime.of(6,0, 0 );
         LocalTime cycleEnd = LocalTime.of(6,30, 0 );
 
@@ -28,6 +30,7 @@ public class BreakfastManager {
         meals.put(MealType.MASHED_POTATO, 12);
 
         int unhappyGuests = 0;
+        int wasteCost= 0;
 
         while (cycleEnd.isBefore(LocalTime.of(10,0,0))){
 
@@ -36,21 +39,23 @@ public class BreakfastManager {
             for ( Guest guest : guests){
                 for(Meal meal : buffet.meals()){
                     if(guest.guestType().getMealPreferences().contains(meal.mealType())){
-                        if(buffetService.consumeFreshest(meal.mealType())) {
+                        if(!buffetService.consumeFreshest(meal.mealType())) {
                             unhappyGuests++;
                         };
                     };
                 }
             }
             if(cycleEnd.isAfter(LocalTime.of(6, 0, 0).plusHours(1).plusMinutes(30))) {
-                buffetService.collectWaste(MealDurability.SHORT, cycleEnd.minusHours(1).minusMinutes(30));
+                wasteCost += buffetService.collectWaste(MealDurability.SHORT, cycleEnd.minusHours(1).minusMinutes(30));
             }
 
             cycleStart.plusMinutes(30);
             cycleEnd.plusMinutes(30);
         }
-        
-        buffetService.collectWaste(MealDurability.SHORT, cycleEnd);
-        buffetService.collectWaste(MealDurability.MEDIUM, cycleEnd);
+
+        wasteCost += buffetService.collectWaste(MealDurability.SHORT, cycleEnd);
+        wasteCost += buffetService.collectWaste(MealDurability.MEDIUM, cycleEnd);
+
+        displayMetrics.displayMetrics(unhappyGuests, wasteCost);
     }
 }

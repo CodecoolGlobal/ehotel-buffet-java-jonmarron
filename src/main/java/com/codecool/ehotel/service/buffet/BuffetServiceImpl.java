@@ -5,7 +5,6 @@ import com.codecool.ehotel.model.Meal;
 import com.codecool.ehotel.model.MealDurability;
 import com.codecool.ehotel.model.MealType;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
 

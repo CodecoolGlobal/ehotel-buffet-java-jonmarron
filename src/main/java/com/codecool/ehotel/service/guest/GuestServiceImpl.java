@@ -21,9 +21,11 @@ public class GuestServiceImpl implements GuestService {
         GuestType[] allGuestTypes = GuestType.values();
         int typeRandomIndex = random.nextInt(allGuestTypes.length);
         GuestType guestType = allGuestTypes[typeRandomIndex];
+        LocalDate checkIn = seasonStart;
+        LocalDate checkOut = checkIn.plusDays(7);
 
         GuestNames guestName = findRandomGuestName(guestType);
-        return new Guest(guestName, guestType, LocalDate.now(), LocalDate.now());
+        return new Guest(guestName, guestType, checkIn, checkOut);
     }
 
     private GuestNames findRandomGuestName(GuestType guestType) {
@@ -45,6 +47,7 @@ public class GuestServiceImpl implements GuestService {
             guestSet.add(generateRandomGuest(LocalDate.now(), LocalDate.now()));
         }
         return guestSet;
-    }}
+    }
+}
 
 

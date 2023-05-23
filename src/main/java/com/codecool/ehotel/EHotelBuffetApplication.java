@@ -19,7 +19,7 @@ public class EHotelBuffetApplication {
         List<Guest> guests = new ArrayList<>();
         int randomGuestNumber = (int) (Math.random() * (20 - 5 + 1)) + 5;
         for (int i = 0; i < randomGuestNumber; i++) {
-            guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now()));
+            guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now().plusDays(30)));
         }
         System.out.println(guests);
         // Run breakfast buffet

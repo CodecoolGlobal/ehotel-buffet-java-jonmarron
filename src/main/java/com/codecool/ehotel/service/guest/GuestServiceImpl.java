@@ -6,7 +6,11 @@ import com.codecool.ehotel.model.GuestNames;
 import com.codecool.ehotel.model.GuestType;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GuestServiceImpl implements GuestService {
     private final Random random;
@@ -26,7 +30,6 @@ public class GuestServiceImpl implements GuestService {
         int checkOutNumber = random.nextInt(7) + 1;
         LocalDate checkIn = seasonStart.plusDays(checkInNumber);
         LocalDate checkOut = checkIn.plusDays(checkOutNumber);
-
         GuestNames guestName = findRandomGuestName(guestType);
         return new Guest(guestName, guestType, checkIn, checkOut);
     }
@@ -43,14 +46,9 @@ public class GuestServiceImpl implements GuestService {
 
     @Override
     public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
-        int randomGuestNumber = (int) (Math.random() * (10 - 5 + 1)) + 5;
-        Set<Guest> guestSet = null;
-        for (int i = 0; i < randomGuestNumber; i++) {
-            guestSet = new HashSet<>();
-            guestSet.add(generateRandomGuest(LocalDate.now(), LocalDate.now()));
-        }
-        return guestSet;
+        return guests.stream()
+                .filter(guest -> guest.checkIn().isBefore(date) && guest.checkOut().isAfter(date))
+                .collect(Collectors.toSet());
     }
 }
-
 

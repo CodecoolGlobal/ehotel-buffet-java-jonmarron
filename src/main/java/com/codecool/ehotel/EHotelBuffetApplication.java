@@ -22,6 +22,7 @@ public class EHotelBuffetApplication {
             guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now().plusDays(30)));
         }
         System.out.println(guests);
+        System.out.println(guestService.getGuestsForDay(guests, LocalDate.now().plusDays(2)));
         // Run breakfast buffet
 
 

@@ -40,6 +40,7 @@ public enum GuestNames {
         this.type = type;
     }
 
-
-
+    public String getType() {
+        return type;
+    }
 }

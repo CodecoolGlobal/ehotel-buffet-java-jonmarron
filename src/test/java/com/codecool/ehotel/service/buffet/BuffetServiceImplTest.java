@@ -17,13 +17,13 @@ class BuffetServiceImplTest {
     @Test
     void refill2meals() {
         Buffet buffet = new Buffet(new ArrayList<>());
-        BuffetService buffetService = new BuffetServiceImpl(buffet);
+        BuffetService buffetService = new BuffetServiceImpl();
         Map<MealType, Integer> meals = Map.of(
                 MealType.MILK, 2,
                 MealType.CEREAL, 1
         );
 
-        buffetService.refill(meals);
+        buffetService.refill(meals, buffet);
 
         Buffet expectedBuffet = new Buffet(List.of(
                 new Meal(MealType.MILK, LocalTime.now()),

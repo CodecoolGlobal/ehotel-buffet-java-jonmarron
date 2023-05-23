@@ -9,14 +9,9 @@ import java.time.LocalTime;
 import java.util.Map;
 
 public class BuffetServiceImpl implements BuffetService{
-    private Buffet buffet;
-
-    public BuffetServiceImpl(Buffet buffet) {
-        this.buffet = buffet;
-    }
 
     @Override
-    public void refill(Map<MealType, Integer> meals) {
+    public void refill(Map<MealType, Integer> meals, Buffet buffet) {
 
         for(Map.Entry<MealType, Integer> meal : meals.entrySet()){
 
@@ -30,7 +25,7 @@ public class BuffetServiceImpl implements BuffetService{
     }
 
     @Override
-    public boolean consumeFreshest(MealType mealType) {
+    public boolean consumeFreshest(MealType mealType, Buffet buffet) {
 
         Meal freshestMeal = null;
         LocalTime freshestTimeStamp = null;
@@ -53,7 +48,7 @@ public class BuffetServiceImpl implements BuffetService{
     }
 
     @Override
-    public int collectWaste(MealDurability mealDurability, LocalTime time) {
+    public int collectWaste(MealDurability mealDurability, LocalTime time, Buffet buffet) {
 
         int cost = 0;
 

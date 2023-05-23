@@ -21,8 +21,11 @@ public class GuestServiceImpl implements GuestService {
         GuestType[] allGuestTypes = GuestType.values();
         int typeRandomIndex = random.nextInt(allGuestTypes.length);
         GuestType guestType = allGuestTypes[typeRandomIndex];
-        LocalDate checkIn = seasonStart;
-        LocalDate checkOut = checkIn.plusDays(7);
+        int seasonLength = seasonEnd.getDayOfYear() - seasonStart.getDayOfYear();
+        int checkInNumber = random.nextInt(seasonLength - 7);
+        int checkOutNumber = random.nextInt(7) + 1;
+        LocalDate checkIn = seasonStart.plusDays(checkInNumber);
+        LocalDate checkOut = checkIn.plusDays(checkOutNumber);
 
         GuestNames guestName = findRandomGuestName(guestType);
         return new Guest(guestName, guestType, checkIn, checkOut);

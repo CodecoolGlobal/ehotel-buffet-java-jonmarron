@@ -25,10 +25,10 @@ public class BreakfastManager {
         LocalTime now = LocalTime.of(6,0,0);
         Map<MealType, Integer> meals = new HashMap<>();
 
-        meals.put(MealType.BUN, 1);
-        meals.put(MealType.CROISSANT, 1);
-        meals.put(MealType.FRIED_BACON, 1);
-        meals.put(MealType.MASHED_POTATO, 1);
+        for (MealType mealType : MealType.values()){
+            meals.put(mealType, 1);
+        }
+        System.out.println("Meals " + meals);
 
         int unhappyGuests = 0;
         int wasteCost= 0;

@@ -9,8 +9,9 @@ import java.util.Map;
 
 public interface BuffetService {
 
-    void refill(Map<MealType , Integer> meals, Buffet buffet);
+    void refill(LocalTime time, Map<MealType, Integer> meals, Buffet buffet);
 
     boolean consumeFreshest(MealType mealType, Buffet buffet);
+
     int collectWaste(MealDurability mealDurability, LocalTime time, Buffet buffet);
 }

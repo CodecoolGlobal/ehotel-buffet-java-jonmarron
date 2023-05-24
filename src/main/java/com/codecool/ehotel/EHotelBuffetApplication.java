@@ -28,7 +28,7 @@ public class EHotelBuffetApplication {
         // Generate guests for the season
         List<Guest> guests = new ArrayList<>();
 
-        int randomGuestNumber = random.nextInt(60-30+1) + 30;
+        int randomGuestNumber = random.nextInt(60 - 30 + 1) + 30;
 
         for (int i = 0; i < randomGuestNumber; i++) {
             guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now().plusDays(10)));

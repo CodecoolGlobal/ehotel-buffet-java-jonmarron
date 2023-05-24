@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuffetServiceImplTest {
     @Test
@@ -23,7 +22,7 @@ class BuffetServiceImplTest {
                 MealType.CEREAL, 1
         );
 
-        buffetService.refill(meals, buffet);
+        buffetService.refill(LocalTime.now(), meals, buffet);
 
         Buffet expectedBuffet = new Buffet(List.of(
                 new Meal(MealType.MILK, LocalTime.now()),

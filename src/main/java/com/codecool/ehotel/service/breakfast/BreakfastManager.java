@@ -38,10 +38,9 @@ public class BreakfastManager {
             buffetService.refill(meals, buffet);
 
             for ( Guest guest : guests){
-                for(Meal meal : buffet.meals()){
-                    if(guest.guestType().getMealPreferences().contains(meal.mealType())){
-
-                        if(!buffetService.consumeFreshest(meal.mealType(), buffet)) {
+                for(int i = buffet.meals().size() -1; i >= 0; i--){
+                    if(guest.guestType().getMealPreferences().contains(buffet.meals().get(i).mealType())){
+                        if(!buffetService.consumeFreshest(buffet.meals().get(i).mealType(), buffet)) {
                             unhappyGuests++;
                         };
                     };

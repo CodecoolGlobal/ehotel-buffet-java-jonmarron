@@ -32,11 +32,11 @@ public class EHotelBuffetApplication {
             guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now().plusDays(10)));
         }
 
-        System.out.println(guests.size() + " Guests");
-        System.out.println(guests);
 
         Set<Guest> todaysGuests = guestService.getGuestsForDay(guests, LocalDate.now().plusDays(2));
-        Set<Set<Guest>> groups = breakfastGroups.prepareBreakfastGroups(todaysGuests);
+        System.out.println(todaysGuests.size() + " Guests");
+        System.out.println(todaysGuests);
+        Set<List<Guest>> groups = breakfastGroups.prepareBreakfastGroups(todaysGuests);
 
         // Run breakfast buffet
         breakfastManager.serve(groups);

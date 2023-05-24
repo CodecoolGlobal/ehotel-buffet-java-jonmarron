@@ -36,7 +36,7 @@ public class BreakfastManager {
         while (now.isBefore(LocalTime.of(10,0,0))){
 
             for (Set<Guest> group : guestsGroup ){
-                buffetService.refill(meals, buffet);
+                buffetService.refill(now, meals, buffet);
                 System.out.println(group);
                 for ( Guest guest : group){
 

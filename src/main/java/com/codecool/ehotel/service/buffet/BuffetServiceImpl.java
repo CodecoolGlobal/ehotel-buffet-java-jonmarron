@@ -11,15 +11,19 @@ import java.util.Map;
 public class BuffetServiceImpl implements BuffetService{
 
     @Override
-    public void refill(Map<MealType, Integer> meals, Buffet buffet) {
+    public void refill(LocalTime time, Map<MealType, Integer> meals, Buffet buffet) {
 
         for(Map.Entry<MealType, Integer> meal : meals.entrySet()){
 
             MealType mealType = meal.getKey();
             Integer amount = meal.getValue();
-
-            for(int i = 0; i < amount; i++){
-                buffet.meals().add(new Meal(mealType, LocalTime.of(6,0,0)));
+            int amountSameMealType = buffet.meals().stream()
+                    .filter(food -> food.mealType() == mealType)
+                    .toList().size();
+            if(amountSameMealType <= 1){
+                for(int i = 0; i < amount; i++){
+                    buffet.meals().add(new Meal(mealType, time));
+                }
             }
         }
     }

@@ -23,7 +23,7 @@ class BuffetServiceImplTest {
                 MealType.CEREAL, 1
         );
 
-        buffetService.refill(meals, buffet);
+        buffetService.refill(LocalTime.now(), meals, buffet);
 
         Buffet expectedBuffet = new Buffet(List.of(
                 new Meal(MealType.MILK, LocalTime.now()),

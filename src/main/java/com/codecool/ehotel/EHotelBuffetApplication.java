@@ -23,7 +23,7 @@ public class EHotelBuffetApplication {
         BreakfastManager breakfastManager = new BreakfastManager(buffet, buffetService);
         // Generate guests for the season
         List<Guest> guests = new ArrayList<>();
-        int randomGuestNumber = (int) (Math.random() * (20 - 5 + 1)) + 5;
+        int randomGuestNumber = (int) (Math.random() * (60 - 30 + 1)) + 30;
         for (int i = 0; i < randomGuestNumber; i++) {
             guests.add(guestService.generateRandomGuest(LocalDate.now(), LocalDate.now().plusDays(10)));
         }

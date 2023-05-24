@@ -32,8 +32,8 @@ class BuffetServiceImplTest {
 
         ));
         assertEquals(expectedBuffet.meals().size(), buffet.meals().size());
-        assertEquals(MealType.CEREAL, buffet.meals().get(0).mealType());
-        assertEquals(MealType.CEREAL, buffet.meals().get(1).mealType());
+        assertEquals(MealType.MILK, buffet.meals().get(0).mealType());
+        assertEquals(MealType.MILK, buffet.meals().get(1).mealType());
         assertEquals(MealType.CEREAL, buffet.meals().get(2).mealType());
     }
 

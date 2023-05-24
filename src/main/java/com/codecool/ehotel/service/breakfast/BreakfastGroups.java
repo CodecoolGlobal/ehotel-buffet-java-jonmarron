@@ -5,7 +5,7 @@ import com.codecool.ehotel.model.Guest;
 import java.util.HashSet;
 import java.util.Set;
 
-public class breakfastGroups {
+public class BreakfastGroups {
     public Set<Set<Guest>> prepareBreakfastGroups(Set<Guest> guests){
         int setSize = guests.size();
         int setSizePerSet = setSize / 8;

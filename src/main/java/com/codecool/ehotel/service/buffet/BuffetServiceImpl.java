@@ -19,7 +19,7 @@ public class BuffetServiceImpl implements BuffetService{
             Integer amount = meal.getValue();
 
             for(int i = 0; i < amount; i++){
-                buffet.meals().add(new Meal(mealType, LocalTime.now()));
+                buffet.meals().add(new Meal(mealType, LocalTime.of(6,0,0)));
             }
         }
     }
@@ -51,12 +51,15 @@ public class BuffetServiceImpl implements BuffetService{
     public int collectWaste(MealDurability mealDurability, LocalTime time, Buffet buffet) {
 
         int cost = 0;
+        int buffetSize = buffet.meals().size();
+        for(int i = buffetSize-1; i>=0;i--){
+            Meal meal = buffet.meals().get(i);
 
-        for (Meal meal : buffet.meals()){
             if(meal.timeStamp().isBefore(time) && meal.mealType().getDurability() == mealDurability ) {
                 buffet.meals().remove(meal);
                 cost += meal.mealType().getCost();
             }
+
         }
 
         return cost;

@@ -49,8 +49,6 @@ public class BreakfastManager {
                 }
             }
             wasteCost += buffetService.collectWaste(MealDurability.SHORT, now.minusHours(1).minusMinutes(30), buffet);
-            System.out.println(now);
-            System.out.println(wasteCost);
 
             now = now.plusMinutes(30);
         }

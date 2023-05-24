@@ -28,7 +28,7 @@ public class BreakfastManager {
         Map<MealType, Integer> meals = new HashMap<>();
 
         for (MealType mealType : MealType.values()) {
-            meals.put(mealType, 10);
+            meals.put(mealType, 2);
         }
 
         System.out.println("Meals " + meals);

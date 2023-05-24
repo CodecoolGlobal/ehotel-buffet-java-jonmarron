@@ -2,34 +2,33 @@ package com.codecool.ehotel.service.breakfast;
 
 import com.codecool.ehotel.model.Guest;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class BreakfastGroups {
-    public Set<Set<Guest>> prepareBreakfastGroups(Set<Guest> guests) {
+    public Set<List<Guest>> prepareBreakfastGroups(Set<Guest> guests) {
+
         int setSize = guests.size();
-        int setSizePerSet = setSize / 8;
-        int remainingElements = setSize % 8;
+        int guestPerSet = setSize / 7;
+        int remainingElements = setSize % 7;
 
-        Set<Set<Guest>> separatedSets = new HashSet<>();
+        Set<List<Guest>> separatedSets = new HashSet<>();
 
-        for (int i = 0; i < 8 - remainingElements; i++) {
-            Set<Guest> subSet = new HashSet<>();
-            for (int j = 0; j < setSizePerSet; j++) {
+
+        for (int i = 0; i < 8-1; i++) {
+            List<Guest> subSet = new ArrayList<>();
+            for (int j = 0; j < guestPerSet; j++) {
+
                 Guest guest = guests.iterator().next();
                 subSet.add(guest);
                 guests.remove(guest);
             }
             separatedSets.add(subSet);
         }
-
-        for (int i = 0; i < remainingElements; i++) {
-            Set<Guest> remainingGuests = new HashSet<>();
-            Guest guest = guests.iterator().next();
-            remainingGuests.add(guest);
-            guests.remove(guest);
-            separatedSets.add(remainingGuests);
-        }
+        separatedSets.add(new ArrayList<>(guests));
+        guests.clear();
         return separatedSets;
     }
 }

@@ -37,7 +37,16 @@ class BuffetServiceImplTest {
     }
 
     @Test
-    void consumeFreshest() {
+    void consumeFreshestSuccess() {
+        Buffet buffet = new Buffet(new ArrayList<>());
+        BuffetService buffetService = new BuffetServiceImpl();
+        Map<MealType, Integer> meals = Map.of(
+                MealType.MILK, 2,
+                MealType.CEREAL, 1
+        );
+        buffetService.refill(LocalTime.now(), meals, buffet);
+
+
     }
 
     @Test

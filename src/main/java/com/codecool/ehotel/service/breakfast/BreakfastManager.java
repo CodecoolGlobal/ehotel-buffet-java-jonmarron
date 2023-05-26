@@ -24,41 +24,40 @@ public class BreakfastManager {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         LocalTime now = LocalTime.of(6, 0, 0);
         Map<MealType, Integer> meals = new HashMap<>();
-
         for (MealType mealType : MealType.values()) {
             meals.put(mealType, 2);
         }
-        System.out.println("Meals " + meals);
-
+        int cyclesLeft = guestsGroup.size();
         int unhappyGuests = 0;
         int wasteCost = 0;
-
-        while (now.isBefore(LocalTime.of(10, 0, 0))) {
-
-            for (List<Guest> group : guestsGroup) {
-
-                buffetService.refill(now, meals, buffet);
-                System.out.println(group);
-                for (Guest guest : group) {
-                    boolean unhappy = false;
-                    for (Map.Entry<MealType, Integer> entry : meals.entrySet()) {
-                        MealType mealType = entry.getKey();
-                        if (guest.guestType().getMealPreferences().contains(mealType)) {
-                            if (!buffetService.consumeFreshest(mealType, buffet) && !unhappy) {
-
-                                unhappyGuests++;
-                                unhappy = true;
-                            }
-                        }
-                    }
-                }
-                wasteCost += buffetService.collectWaste(MealDurability.SHORT, now.minusHours(1).minusMinutes(30), buffet);
-                now = now.plusMinutes(30);
-            }
+        for (List<Guest> group : guestsGroup) {
+            displayMetrics.displayGuests(group);
+            buffetService.refill(now, meals, buffet);
+            unhappyGuests = getUnhappyGuestsAndConsume(meals, unhappyGuests, group);
+            wasteCost += buffetService.collectWaste(MealDurability.SHORT, now.minusHours(1).minusMinutes(30), buffet);
+            now = now.plusMinutes(30);
+            cyclesLeft--;
         }
-        wasteCost += buffetService.collectWaste(MealDurability.SHORT, now, buffet);
-        wasteCost += buffetService.collectWaste(MealDurability.MEDIUM, now, buffet);
-
+        int endWaste = buffetService.collectWaste(MealDurability.SHORT, now, buffet) + buffetService.collectWaste(MealDurability.MEDIUM, now, buffet);
+        wasteCost += endWaste;
         displayMetrics.displayMetrics(unhappyGuests, wasteCost);
     }
+
+    private int getUnhappyGuestsAndConsume(Map<MealType, Integer> meals, int unhappyGuests, List<Guest> group) {
+        for (Guest guest : group) {
+            boolean unhappy = false;
+            for (Map.Entry<MealType, Integer> entry : meals.entrySet()) {
+                MealType mealType = entry.getKey();
+                if (guest.guestType().getMealPreferences().contains(mealType)) {
+                    if (!buffetService.consumeFreshest(mealType, buffet) && !unhappy) {
+                        unhappyGuests++;
+                        unhappy = true;
+                    }
+                }
+            }
+        }
+        return unhappyGuests;
+    }
+
+
 }

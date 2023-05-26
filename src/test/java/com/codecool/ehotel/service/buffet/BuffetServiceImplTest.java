@@ -13,10 +13,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BuffetServiceImplTest {
+    int minimumAmountOfFood = 1;
+    BuffetService buffetService = new BuffetServiceImpl(minimumAmountOfFood);
+
     @Test
     void refill2meals() {
         Buffet buffet = new Buffet(new ArrayList<>());
-        BuffetService buffetService = new BuffetServiceImpl();
         Map<MealType, Integer> meals = Map.of(
                 MealType.MILK, 2,
                 MealType.CEREAL, 1
@@ -39,14 +41,14 @@ class BuffetServiceImplTest {
     @Test
     void consumeFreshestSuccess() {
         Buffet buffet = new Buffet(new ArrayList<>());
-        BuffetService buffetService = new BuffetServiceImpl();
         Map<MealType, Integer> meals = Map.of(
                 MealType.MILK, 2,
                 MealType.CEREAL, 1
         );
+
         buffetService.refill(LocalTime.now(), meals, buffet);
 
-
+        // assert
     }
 
     @Test

@@ -40,15 +40,18 @@ public class GuestServiceImpl implements GuestService {
                 .filter(guestNames -> guestNames.getType().equalsIgnoreCase(guestType.toString()))
                 .toList();
         int randomNameIndex = random.nextInt(names.size());
-
         return names.get(randomNameIndex);
     }
 
     @Override
     public Set<Guest> getGuestsForDay(List<Guest> guests, LocalDate date) {
         return guests.stream()
-                .filter(guest -> guest.checkIn().isBefore(date) && guest.checkOut().isAfter(date))
+                .filter(guest -> isStayingAtTheHotel(date, guest))
                 .collect(Collectors.toSet());
+    }
+
+    private boolean isStayingAtTheHotel(LocalDate date, Guest guest) {
+        return guest.checkIn().isBefore(date) && guest.checkOut().isAfter(date);
     }
 }
 

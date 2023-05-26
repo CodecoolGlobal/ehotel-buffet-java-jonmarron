@@ -1,6 +1,5 @@
 package com.codecool.ehotel.model;
 
-import java.util.List;
 public enum GuestNames {
 
     THORIN("dwarf"),
@@ -35,8 +34,9 @@ public enum GuestNames {
     TURIN("human"),
     EOWYN("human");
 
-    private String type;
-    GuestNames(String type){
+    private final String type;
+
+    GuestNames(String type) {
         this.type = type;
     }
 

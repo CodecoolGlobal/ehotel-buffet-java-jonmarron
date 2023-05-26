@@ -10,6 +10,12 @@ import java.util.Map;
 
 public class BuffetServiceImpl implements BuffetService {
 
+    private final int minimumAmountOfFood;
+
+    public BuffetServiceImpl(int minimumAmountOfFood) {
+        this.minimumAmountOfFood = minimumAmountOfFood;
+    }
+
     @Override
     public void refill(LocalTime time, Map<MealType, Integer> meals, Buffet buffet) {
         for (Map.Entry<MealType, Integer> meal : meals.entrySet()) {
@@ -18,7 +24,7 @@ public class BuffetServiceImpl implements BuffetService {
             int amountSameMealType = buffet.meals().stream()
                     .filter(food -> food.mealType() == mealType)
                     .toList().size();
-            if (amountSameMealType <= 1) {
+            if (amountSameMealType <= minimumAmountOfFood) {
                 for (int i = 0; i < amount; i++) {
                     buffet.meals().add(new Meal(mealType, time));
                 }
@@ -31,11 +37,9 @@ public class BuffetServiceImpl implements BuffetService {
         Meal freshestMeal = null;
         LocalTime freshestTimeStamp = null;
         for (Meal meal : buffet.meals()) {
-            if (meal.mealType() == mealType) {
-                if (freshestTimeStamp == null || freshestTimeStamp.isBefore(meal.timeStamp())) {
-                    freshestMeal = meal;
-                    freshestTimeStamp = freshestMeal.timeStamp();
-                }
+            if (isFresh(meal, mealType, freshestTimeStamp)) {
+                freshestMeal = meal;
+                freshestTimeStamp = freshestMeal.timeStamp();
             }
         }
         if (freshestMeal != null) {
@@ -43,6 +47,11 @@ public class BuffetServiceImpl implements BuffetService {
             return true;
         }
         return false;
+    }
+
+    private boolean isFresh(Meal meal, MealType mealType, LocalTime freshestTimeStamp) {
+        return meal.mealType() == mealType &&
+                (freshestTimeStamp == null || freshestTimeStamp.isBefore(meal.timeStamp()));
     }
 
     @Override
